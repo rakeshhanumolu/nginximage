@@ -9,41 +9,41 @@ jobs:
   build-and-push-ecr:
     runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    # steps:
+    # - name: Checkout code
+    #   uses: actions/checkout@v2
 
-    - name: Log in to Amazon ECR
-      uses: aws-actions/amazon-ecr-login@v1
-      env:
-        AWS_REGION: ${{ secrets.AWS_REGION }}  # Ensure you have this secret set in your GitHub repository
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}  # AWS credentials
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    # - name: Log in to Amazon ECR
+    #   uses: aws-actions/amazon-ecr-login@v1
+    #   env:
+    #     AWS_REGION: ${{ secrets.AWS_REGION }}  # Ensure you have this secret set in your GitHub repository
+    #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}  # AWS credentials
+    #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      with:
-        mask-password: false
-        registry-type: private
-        skip-logout: false
+    #   with:
+    #     mask-password: false
+    #     registry-type: private
+    #     skip-logout: false
 
-    - name: Build, tag, and push image to Amazon ECR
-      env:
-        ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
-        AWS_REGION: ${{ secrets.AWS_REGION }}
-        IMAGE_TAG: ${{ github.sha }}
-      run: |
-        # Build the Docker image
-        docker build -t rakeshecr .
-        # Tag the image for ECR
-        docker tag rakeshecr:latest 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
-        # Push the image to ECR
-        docker push 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
-    - name: Upload image to S3
-      env:
-        AWS_REGION: ${{ secrets.AWS_REGION }}
-        S3_BUCKET: ${{ secrets.S3_BUCKET }}
-      run: |
+    # - name: Build, tag, and push image to Amazon ECR
+    #   env:
+    #     ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+    #     AWS_REGION: ${{ secrets.AWS_REGION }}
+    #     IMAGE_TAG: ${{ github.sha }}
+    #   run: |
+    #     # Build the Docker image
+    #     docker build -t rakeshecr .
+    #     # Tag the image for ECR
+    #     docker tag rakeshecr:latest 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
+    #     # Push the image to ECR
+    #     docker push 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
+    # - name: Upload image to S3
+    #   env:
+    #     AWS_REGION: ${{ secrets.AWS_REGION }}
+    #     S3_BUCKET: ${{ secrets.S3_BUCKET }}
+    #   run: |
         
-        docker save 825765405225.dkr.ecr.us-east-2.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest -o image.tar
+    #     docker save 825765405225.dkr.ecr.us-east-2.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest -o image.tar
 
        
   deploy-to-eks:
