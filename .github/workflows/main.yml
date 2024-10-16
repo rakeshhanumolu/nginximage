@@ -42,7 +42,7 @@ jobs:
         AWS_REGION: ${{ secrets.AWS_REGION }}
         S3_BUCKET: ${{ secrets.S3_BUCKET }}
       run: |
-        # Save the image to a tar file
+        
         docker save 825765405225.dkr.ecr.us-east-2.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest -o image.tar
 
        
