@@ -45,7 +45,8 @@ jobs:
         # Save the image to a tar file
         docker save 825765405225.dkr.ecr.us-east-2.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:${{ github.sha }} -o image.tar
         # Upload the tar file to S3
-        aws s3 cp image.tar s3://$S3_BUCKET/$IMAGE_TAG.tar
+        docker save 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:$IMAGE_TAG -o image.tar
+
 
   deploy-to-eks:
     runs-on: ubuntu-latest
