@@ -55,10 +55,11 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Configure kubectl
-      uses: aws-actions/eks-kubectl-action@v1
-      with:
-        cluster-name: ${{ secrets.EKS_CLUSTER_NAME }}
-        region: ${{ secrets.AWS_REGION }}
+  uses: aws-actions/eks-kubectl@v1
+  with:
+    cluster-name: ${{ secrets.EKS_CLUSTER_NAME }}
+    region: ${{ secrets.AWS_REGION }}
+
 
     - name: Deploy to EKS
       env:
