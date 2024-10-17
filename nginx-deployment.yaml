@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: <ECR_REPOSITORY_URL>:<IMAGE_TAG>
+        image: 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
         ports:
         - containerPort: 80
