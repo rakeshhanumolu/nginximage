@@ -64,7 +64,8 @@ jobs:
 
       - name: Upload artifact to S3
         run: |
-          aws s3 cp ${{ secrets.ARTIFACT_PATH }} s3://bhairavatv1/latest/ --region us-east-2
+          aws s3 cp rakeshecr_image.tar s3://bhairavatv1/latest/ --region us-east-2
+
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
