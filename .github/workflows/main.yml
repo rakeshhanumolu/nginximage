@@ -34,12 +34,26 @@ jobs:
         run: |
           docker save 825765405225.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest -o image.tar
 
-      - name: Upload image to S3
-        env:
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-          S3_BUCKET: bhairavatv1  # Your S3 bucket
-        run: |
-          aws s3 cp image.tar s3://$S3_BUCKET/image.tar
+      upload-to-s3:
+  runs-on: ubuntu-latest
+
+  steps:
+  - name: Checkout code
+    uses: actions/checkout@v2
+
+  - name: Configure AWS credentials
+    uses: aws-actions/configure-aws-credentials@v2
+    with:
+      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws-region: ${{ secrets.AWS_REGION }}
+
+  - name: Upload image to S3
+    run: |
+      aws s3 cp image.tar s3://$S3_BUCKET/image.tar
+    env:
+      S3_BUCKET: bhairavatv1
+
 
   deploy-to-eks:
     runs-on: ubuntu-latest
