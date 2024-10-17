@@ -47,6 +47,21 @@ jobs:
           docker push 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
           docker pull 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
 
+     - name: Configure AWS CLI
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+          aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+          aws configure set default.region us-east-1 
+
+
+
+
+
+          
+
   upload-to-s3:
     runs-on: ubuntu-latest
     steps:
