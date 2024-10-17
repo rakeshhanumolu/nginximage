@@ -27,8 +27,8 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t rakeshecr .
-          docker tag rakeshecr:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/$ECR_REPOSITORY:latest
-          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/$ECR_REPOSITORY:latest
+          docker tag rakeshecr:latest 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
+          docker push 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
 
       - name: Upload image to S3
         env:
