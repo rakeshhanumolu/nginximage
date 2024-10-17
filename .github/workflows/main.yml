@@ -43,11 +43,13 @@ jobs:
         run: |
           aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 825765405225.dkr.ecr.us-east-2.amazonaws.com
           docker build -t rakeshecr .
-          docker tag rakeshecr:latest 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
-          docker push 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
-          aws s3 cp rakeshecr_image.tar s3://bhairavatv1/latest/ --region us-east-2
+          docker tag rakeshecr:latest001 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest001
+          docker push 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest001
+          docker pull 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest001
+          docker save -o rakeshecr_image.tar 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest001
+          aws s3 cp rakeshecr_image.tar s3://bhairavatv1/latest001/ --region us-east-2
 
-          aws s3 cp rakesh_latest.tar s3://sivaanna/rakesh_latest.tar
+          
   deploy-to-eks:
     runs-on: ubuntu-latest
     needs: build-and-push-ecr
