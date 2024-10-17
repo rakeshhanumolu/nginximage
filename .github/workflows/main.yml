@@ -29,7 +29,7 @@ jobs:
           docker build -t rakeshecr .
           docker tag rakeshecr:latest 825765405225.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
           docker push 825765405225.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
-
+          docker pull 825765405225.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
       - name: Save Docker image
         run: |
           docker save -o image.tar latest
