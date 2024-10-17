@@ -35,8 +35,7 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           S3_BUCKET: ${{ secrets.S3_BUCKET }}
         run: |
-          docker save ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest -o image.tar
-
+          docker save 825765405225.dkr.ecr.us-east-2.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest -o image.tar
   deploy-to-eks:
     runs-on: ubuntu-latest
     needs: build-and-push-ecr
