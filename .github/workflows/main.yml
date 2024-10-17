@@ -50,19 +50,16 @@ jobs:
 
       - name: Save Docker image
         run: |
-          docker save -o image.tar 825765405225.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
-          chmod 777 image.tar
-          ls -la
-          if [ ! -f image.tar ]; then
-            echo "Error: image.tar not found"
-            exit 1
-          fi
+          aws ecr describe-images --rakeshecr your-repository-name --region us-east-2
+          aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr
+          docker pull 825765405225.dkr.ecr.your-region.amazonaws.com/your-repository-name:latest
+          docker save -o image.tar 825765405225.dkr.ecr.your-region.amazonaws.com/your-repository-name:latest
 
       - name: Upload image artifact
         uses: actions/upload-artifact@v3
         with:
-          name: image.tar
-          path: image.tar
+          name: latest
+          path: arn:aws:s3:::bhairavatv1
 
   upload-to-s3:
     runs-on: ubuntu-latest
