@@ -52,7 +52,7 @@ jobs:
         run: |
            docker login https://825765405225.dkr.ecr.us-east-2.amazonaws.com
            aws ecr describe-images --repository-name rakeshecr --region us-east-2
-           https://825765405225.dkr.ecr.us-east-2.amazonaws.com
+           825765405225.dkr.ecr.us-east-2.amazonaws.com
            ping google.com
            /etc/resolv.conf
            sudo systemctl restart systemd-resolved
