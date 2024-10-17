@@ -33,12 +33,12 @@ jobs:
       - name: Save Docker image
         run: |
           # Attempt to save the Docker image
-          docker save -o image.tar 825765405225.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
+          docker save -o latest 825765405225.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
           # List files in the directory to verify the image was saved
           ls -la
-          # Check if the image.tar file exists
-          if [ ! -f image.tar ]; then
-            echo "Error: image.tar not found"
+          # Check if the latest file exists
+          if [ ! -f latest ]; then
+            echo "Error: latest not found"
             exit 1
           fi
 
@@ -59,7 +59,7 @@ jobs:
 
       - name: Upload image to S3
         run: |
-          aws s3 cp image.tar s3://$S3_BUCKET/image.tar
+          aws s3 cp latest s3://$S3_BUCKET/latest
         env:
           S3_BUCKET: bhairavatv1
 
