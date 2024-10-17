@@ -60,7 +60,8 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: latest
-          path: https://us-east-2.console.aws.amazon.com/s3/buckets/bhairavatv1?region=us-east-2&bucketType=general
+          path: 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr
+
 
       - name: Upload artifact to S3
         run: |
