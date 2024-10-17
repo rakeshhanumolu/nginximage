@@ -32,17 +32,17 @@ jobs:
 
       - name: Save Docker image
         run: |
-          docker save -o image.tar 825765405225.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
+          docker save -o latest 825765405225.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
           ls -la
-          if [ ! -f image.tar ]; then
-            echo "Error: image.tar not found"
+          if [ ! -f latest ]; then
+            echo "Error: latest not found"
             exit 1
 
       - name: Upload image artifact
         uses: actions/upload-artifact@v3
         with:
-          name: image-tar
-          path: image.tar
+          name: latest
+          path: latest
 
   upload-to-s3:
     runs-on: ubuntu-latest
