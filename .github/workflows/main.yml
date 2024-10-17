@@ -45,7 +45,6 @@ jobs:
           docker build -t rakeshecr .
           docker tag rakeshecr:latest 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
           docker push 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
-          docker pull 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
           aws s3 cp latest.tar s3://bhairavatv1/https://us-east-2.console.aws.amazon.com/s3/buckets/bhairavatv1?region=us-east-2&bucketType=general&prefix=vara/
 
         
