@@ -46,18 +46,25 @@ jobs:
           docker tag rakeshecr:latest 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
           docker push 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
           docker pull 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
-
-  upload-to-s3:
-    runs-on: ubuntu-latest
+     
+    upload-to-s3:
+    jobs:
+    build:
+    
+  runs-on: ubuntu-latest
     steps:
-      - name: Build
-        run: echo "Build steps here"
-      
-      - name: Upload Artifact
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build project
+        run: echo "Building..."
+
+      - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: latest
           path: path/to/your/artifact
+
 
   download:
     runs-on: ubuntu-latest
