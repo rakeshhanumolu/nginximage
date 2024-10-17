@@ -31,15 +31,15 @@ jobs:
           docker push 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
 
       - name: Save Docker image
-  run: |
-    docker save 825765405225.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest -o image.tar
+        run: |
+          docker save 825765405225.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest -o image.tar
 
-     - name: Upload image to S3
-  env:
-    AWS_REGION: ${{ secrets.AWS_REGION }}
-    S3_BUCKET: bhairavatv1  # Your S3 bucket
-  run: |
-    aws s3 cp image.tar s3://$S3_BUCKET/image.tar
+      - name: Upload image to S3
+        env:
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          S3_BUCKET: bhairavatv1  # Your S3 bucket
+        run: |
+          aws s3 cp image.tar s3://$S3_BUCKET/image.tar
 
   deploy-to-eks:
     runs-on: ubuntu-latest
