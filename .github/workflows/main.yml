@@ -48,25 +48,7 @@ jobs:
           docker push 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
           docker pull 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
 
-      - name: Save Docker image
-        run: |
-           docker login https://825765405225.dkr.ecr.us-east-2.amazonaws.com
-           aws ecr describe-images --repository-name rakeshecr --region us-east-2
-           825765405225.dkr.ecr.us-east-2.amazonaws.com
-           ping google.com
-           /etc/resolv.conf
-           sudo systemctl restart systemd-resolved
-           sudo systemctl status docker
-           aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 825765405225.dkr.ecr.us-east-2.amazonaws.com
-           docker pull 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
-           sudo systemctl restart docker
-           journalctl -u docker.service
-          
-      - name: Upload image artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: latest
-          path: arn:aws:s3:::bhairavatv1
+      
 
   upload-to-s3:
     runs-on: ubuntu-latest
@@ -76,7 +58,7 @@ jobs:
       - name: Download image artifact
         uses: actions/download-artifact@v3
         with:
-          name: image.tar
+          name: latest
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -87,7 +69,7 @@ jobs:
 
       - name: Upload image to S3
         run: |
-          aws s3 cp image.tar s3://$S3_BUCKET/image.tar
+          aws s3 cp latest s3://$S3_BUCKET/latest
         env:
           S3_BUCKET: bhairavatv1
 
