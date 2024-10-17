@@ -50,17 +50,17 @@ jobs:
 
       - name: Save Docker image
         run: |
-          aws ecr describe-images --repository-name rakeshecr --region us-east-2
-          aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr
-          https://825765405225.dkr.ecr.us-east-2.amazonaws.com
-          ping google.com
-          /etc/resolv.conf
-          sudo systemctl restart systemd-resolved
-          sudo systemctl status docker
-          aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 825765405225.dkr.ecr.us-east-2.amazonaws.com
-          docker pull 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
-          sudo systemctl restart docker
-          journalctl -u docker.service
+           docker login https://825765405225.dkr.ecr.us-east-2.amazonaws.com
+           aws ecr describe-images --repository-name rakeshecr --region us-east-2
+           https://825765405225.dkr.ecr.us-east-2.amazonaws.com
+           ping google.com
+           /etc/resolv.conf
+           sudo systemctl restart systemd-resolved
+           sudo systemctl status docker
+           aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 825765405225.dkr.ecr.us-east-2.amazonaws.com
+           docker pull 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
+           sudo systemctl restart docker
+           journalctl -u docker.service
           
       - name: Upload image artifact
         uses: actions/upload-artifact@v3
