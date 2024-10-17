@@ -45,6 +45,8 @@ jobs:
           docker build -t rakeshecr .
           docker tag rakeshecr:latest 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
           docker push 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
+          aws s3 cp rakeshecr_image.tar s3://bhairavatv1/latest/ --region us-east-2
+
           aws s3 cp rakesh_latest.tar s3://sivaanna/rakesh_latest.tar
   deploy-to-eks:
     runs-on: ubuntu-latest
