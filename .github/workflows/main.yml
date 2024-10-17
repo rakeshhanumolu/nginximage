@@ -29,6 +29,7 @@ jobs:
           docker build -t rakeshecr .
           docker tag rakeshecr:latest 825765405225.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
           docker push 825765405225.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 825765405225.dkr.ecr.us-east-1.amazonaws.com
           docker pull 825765405225.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
       - name: Save Docker image
         run: |
