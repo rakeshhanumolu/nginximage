@@ -61,7 +61,12 @@ jobs:
         with:
           name: latest
           path: https://us-east-2.console.aws.amazon.com/s3/buckets/bhairavatv1?region=us-east-2&bucketType=general&tab=objects
-
+      - name: Upload artifact to S3
+        run: |
+          aws s3 cp /path/to/your/artifact s3://bhairavatv1/latest/ --region us-east-2
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   download:
     runs-on: ubuntu-latest
     needs: upload-to-s3
