@@ -16,14 +16,9 @@ jobs:
       - name: Log in to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v1
         env:
-          AWS_REGION: ${{ secrets.AWS_REGION }}  # Ensure you have this secret set in your GitHub repository
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}  # AWS credentials
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-        with:
-          mask-password: false
-          registry-type: private
-          skip-logout: false
 
       - name: Build, tag, and push image to Amazon ECR
         env:
@@ -31,11 +26,8 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          # Build the Docker image
           docker build -t rakeshecr .
-          # Tag the image for ECR
           docker tag rakeshecr:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/$ECR_REPOSITORY:latest
-          # Push the image to ECR
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/$ECR_REPOSITORY:latest
 
       - name: Upload image to S3
@@ -45,29 +37,27 @@ jobs:
         run: |
           docker save ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest -o image.tar
 
-        deploy-to-eks:
-  runs-on: ubuntu-latest
-  needs: build-and-push-ecr
+  deploy-to-eks:
+    runs-on: ubuntu-latest
+    needs: build-and-push-ecr
 
-  steps:
-  - name: Checkout code
-    uses: actions/checkout@v2
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-  - name: Configure AWS credentials
-    uses: aws-actions/configure-aws-credentials@v2
-    with:
-      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      aws-region: ${{ secrets.AWS_REGION }}
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
-  - name: Setup kubectl
-    run: |
-      curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.21.2/2021-07-05/bin/linux/amd64/kubectl
-      chmod +x ./kubectl
-      sudo mv ./kubectl /usr/local/bin
+      - name: Setup kubectl
+        run: |
+          curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.21.2/2021-07-05/bin/linux/amd64/kubectl
+          chmod +x ./kubectl
+          sudo mv ./kubectl /usr/local/bin
 
-  - name: Update deployment in EKS
-    run: |
-      kubectl set image deployment/nginx-deployment nginx=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:${{ github.sha }}
-
-  
+      - name: Update deployment in EKS
+        run: |
+          kubectl set image deployment/nginx-deployment nginx=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:${{ github.sha }}
