@@ -26,12 +26,12 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t rakeshecr .
-          docker tag rakeshecr:latest 825765405225.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
-          docker push 825765405225.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
           aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 825765405225.dkr.ecr.us-east-2.amazonaws.com
- 
-          docker pull 825765405225.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
+          docker build -t rakeshecr .
+          docker tag rakeshecr:latest 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
+          docker push 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
+          docker pull 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
+
       - name: Save Docker image
         run: |
           docker save -o image.tar latest
