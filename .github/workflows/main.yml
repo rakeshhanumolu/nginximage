@@ -65,7 +65,7 @@ jobs:
 
       - name: Upload artifact to S3
         run: |
-          aws s3 cp 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr s3://bhairavatv1/latest/ --region us-east-2
+          aws s3 cp latest.tar s3://bhairavatv1/https://us-east-2.console.aws.amazon.com/s3/buckets/bhairavatv1?region=us-east-2&bucketType=general&prefix=vara/
 
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
