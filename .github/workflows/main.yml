@@ -32,6 +32,7 @@ jobs:
 
       - name: Save Docker image
         run: |
+          chmod 777 image.tar
           docker save -o image.tar 825765405225.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
           ls -la
           if [ ! -f image.tar ]; then
