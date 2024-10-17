@@ -60,7 +60,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: latest
-          path: path/to/your/artifact
+          path: https://us-east-2.console.aws.amazon.com/s3/buckets/bhairavatv1?region=us-east-2&bucketType=general
 
   download:
     runs-on: ubuntu-latest
