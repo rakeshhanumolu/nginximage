@@ -72,8 +72,10 @@ jobs:
 
       - name: Update deployment in EKS
         run: |
-          kubectl config current-context
-          export KUBECONFIG=/path/to/your/kubeconfig
-          aws sts get-caller-identity
-          aws eks update-kubeconfig --region us-east-1 --name my-cluster
-          kubectl set image deployment/nginx-deployment nginx=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:${{ github.sha }}
+         
+
+# Update your kubeconfig for EKS
+aws eks update-kubeconfig --region us-east-1 --name my-cluster
+
+# Run your command to set the image
+kubectl set image deployment/nginx-deployment nginx=.dkr.ecr.your-region.amazonaws.com/your-repo-name:7c9b76b2e37374e26472046e80a89807177da907
