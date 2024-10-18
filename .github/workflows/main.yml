@@ -72,4 +72,4 @@ jobs:
       - name: Update deployment in EKS
         run: |
           aws eks update-kubeconfig --region us-east-1 --name my-cluster
-          kubectl set image deployment/latest latest=825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
+          kubectl set image deployment/my-deployment my-container=***.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
