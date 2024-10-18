@@ -42,8 +42,7 @@ jobs:
           ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
         run: |
           aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 825765405225.dkr.ecr.us-east-2.amazonaws.com
-          docker build -t rakeshecr Dockerfile .
-          docker buildx build .
+          docker build -t rakeshecr Dockerfile
           docker tag rakeshecr:latest 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
           docker push 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
           docker pull 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
