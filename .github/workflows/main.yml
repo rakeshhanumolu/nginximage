@@ -49,7 +49,6 @@ jobs:
           docker save -o rakeshecr_image.tar 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
           aws s3 cp rakeshecr_image.tar s3://bhairavatv1/latest/ --region us-east-2
 
-          
   deploy-to-eks:
     runs-on: ubuntu-latest
     needs: build-and-push-ecr
@@ -72,10 +71,5 @@ jobs:
 
       - name: Update deployment in EKS
         run: |
-         
-
-# Update your kubeconfig for EKS
-aws eks update-kubeconfig --region us-east-1 --name my-cluster
-
-# Run your command to set the image
-kubectl set image deployment/nginx-deployment nginx=.dkr.ecr.your-region.amazonaws.com/your-repo-name:7c9b76b2e37374e26472046e80a89807177da907
+          aws eks update-kubeconfig --region us-east-1 --name my-cluster
+          kubectl set image deployment/nginx-deployment nginx=825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
